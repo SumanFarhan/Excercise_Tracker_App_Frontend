@@ -1,0 +1,22 @@
+.main{
+  display: flex;
+}
+.leftSide {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 190, 189, 1) 0%,
+    rgba(0, 122, 255, 1) 33%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  width: 50%;
+  height: 100vh;
+  text-align: center;
+}
+.rightSide {
+  width: 50%;
+  text-align: center;
+}
+.animationImage{
+  width: 660px;
+  height: 660px;
+}

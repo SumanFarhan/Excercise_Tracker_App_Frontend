@@ -1,0 +1,87 @@
+.main {
+    display: flex;
+    background-color: #fefcfa;
+}
+input{
+    background-color: transparent !important;
+}
+.leftSide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100vh;
+    /* text-align: center; */
+}
+.heading{
+
+}
+
+.rightSide {
+    width: 50%;
+    height: auto;
+}
+.btn-primary{
+        background-image: linear-gradient(to right, #C8102E 0%, #fefcfa  51%, #C8102E  100%);
+        margin: 10px;
+        padding: 15px 45px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: black !important;
+        box-shadow: 0 0 20px #eee;
+        border-radius: 10px;
+        display: block;
+      }
+    
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  [type=radio] + img {
+    cursor: pointer;
+  }
+
+  [type=radio]:checked + img {
+    outline: 2px solid #f00;
+  }
+.activityList{
+    background-color: #FEFCFA;
+}
+.heading{
+    color: #C8102E !important;
+}
+.card {
+    background-color: #FEFCFA !important;
+    border: #C8102E 2px solid !important;
+    margin:  50px !important;
+}
+
+.list-group-item {
+    background-color: #FEFCFA!important;
+    border: none !important;
+}
+
+.card-title {
+    color: #C8102E!important;
+    text-align: center;
+}
+
+.cardsList {
+    display: flex;
+    position: fixed;
+    flex-wrap: wrap;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    width: 1500px;
+    background-color: whitesmoke; 
+    height: 700px;
+    align-items: center;
+    justify-content: center;
+}

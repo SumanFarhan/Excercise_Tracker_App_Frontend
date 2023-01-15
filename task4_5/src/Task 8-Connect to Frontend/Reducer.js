@@ -1,15 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const addExcercise = createAsyncThunk(
-    'excercise/addExcercise',
+export const addActivity = createAsyncThunk(
+    'excercise/addActivity',
     async (data, thunkApi) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
+        
+        if(data == ''){
+            console.log('data is empty');
+        }
+        else{
         const res = await fetch('http://localhost:3007/addActivity', requestOptions)
+        console.log('hit inside after adding activity');
         return res.json();
+        }
     }
 )
 
@@ -52,7 +59,7 @@ export const deleteExcercise = createAsyncThunk(
 )
 
 const initialState = {
-
+    redirectToDashboard: false
 }
 
 export const Reducer = createSlice({
@@ -60,17 +67,18 @@ export const Reducer = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        // [signupUser.pending]: () => {
-        //     console.log('pending');
-        // },
-        // [signupUser.fulfilled]: (state, action) => {
-        //     state.usersData = action.payload.data;
-        //     alert("User Registered SuccessFully")
+        [addActivity.pending]: () => {
+            console.log('pending');
+        },
+        [addActivity.fulfilled]: (state, action) => {
+            state.response = action.payload.message;
+            state.redirectToDashboard = true;
+            alert(state.response);
 
-        // },
-        // [signupUser.rejected]: (state) => {
-        //     alert("Fill all data")
-        // },
+        },
+        [addActivity.rejected]: (state) => {
+            alert("Fill all data")
+        },
 
         // [loginUser.fulfilled]: (state, action) => {
         //         state.loginData = action.payload.data;

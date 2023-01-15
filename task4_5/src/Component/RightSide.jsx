@@ -3,24 +3,36 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux'
 import run from '../Images/RUN.PNG'
 import walk from '../Images/walk.PNG'
 import hike from '../Images/hike.PNG'
 import swim from '../Images/swim.PNG'
 import ride from '../Images/Ride.PNG'
+import {addActivity} from '../Task 8-Connect to Frontend/Reducer'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 const RightSide = () => {
   const [addExcercise, setaddExcercise] = useState({
     name: "",
     description: "",
-    activityType:['run','walk','hike','swim','ride'],
+    activityType:'',
     duration: "",
     date: "",
   });
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const redirectToDashboard = useSelector(state => state.excercise.redirectToDashboard)
+  
+
+  useEffect(()=>{
+    if(redirectToDashboard){
+        navigate("/dashboard");
+    }
+},[redirectToDashboard])
 
   const Setting = (event) => {
     const { name, value } = event.target
@@ -50,23 +62,23 @@ const RightSide = () => {
       <h5>ACTIVITY TYPE</h5>
       <div className="mb-3">
         <label>
-          <input type="radio" name="run" value={addExcercise.activityType[0]}  onChange={Setting}/>
+          <input type="radio" name="run" value={addExcercise.activityType}  onChange={Setting}/>
           <img src={run} alt="Option 1" className='activityTypeImage'/>
         </label>
         <label>
-          <input type="radio" name="bicycleRide" value={addExcercise.activityType[4]}  onChange={Setting}  />
+          <input type="radio" name="bicycleRide" value={addExcercise.activityType}  onChange={Setting}  />
           <img src={ride} alt="Option 2" className='activityTypeImage'/>
         </label>
         <label>
-          <input type="radio" name="walk" value={addExcercise.activityType[1]}  onChange={Setting}  />
+          <input type="radio" name="walk" value={addExcercise.activityType}  onChange={Setting}  />
           <img src={walk} alt="Option 3" className='activityTypeImage' />
         </label>
         <label>
-          <input type="radio" name="swim" value={addExcercise.activityType[3]}  onChange={Setting}  />
+          <input type="radio" name="swim" value={addExcercise.activityType}  onChange={Setting}  />
           <img src={swim} alt="Option 4" className='activityTypeImage' />
         </label>
         <label>
-          <input type="radio" name="hike" value={addExcercise.activityType[2]}  onChange={Setting}  />
+          <input type="radio" name="hike" value={addExcercise.activityType}  onChange={Setting}  />
           <img src={hike} alt="Option 5" className='activityTypeImage'/>
         </label> 
       </div>
@@ -88,7 +100,7 @@ const RightSide = () => {
           onChange={Setting} 
         />
       </InputGroup>
-      <div className="button"><Button variant="primary" className='btnAdd'><AddCircleIcon style={{ marginRight: "10px", marginBottom: "2px" }} />Excercise Activty</Button></div>
+      <div className="button"><Button variant="primary" className='btnAdd' onClick={()=>dispatch(addActivity(addExcercise))}><AddCircleIcon style={{ marginRight: "10px", marginBottom: "2px" }} />Excercise Activty</Button></div>
     </>
   )
 }

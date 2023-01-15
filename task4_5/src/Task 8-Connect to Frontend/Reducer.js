@@ -8,7 +8,6 @@ export const addActivity = createAsyncThunk(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
-        console.log('data hereeeeeee',JSON.stringify(data))
         
         if(data.name == '' || data.activityType == '' || data.description == '' || data.duration == '' || data.date == '')
         {
@@ -16,7 +15,6 @@ export const addActivity = createAsyncThunk(
         }
         else{
         const res = await fetch('http://localhost:3007/addActivity', requestOptions)
-        console.log('hit inside after adding activity');
         return res.json();
         }
     }
@@ -30,9 +28,7 @@ export const getExcercise = createAsyncThunk(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
-        console.log("inside get request")
         const res = await fetch('http://localhost:3007/getActivity', requestOptions)
-        // console.log("inside after get request",res)
         return res.json();
     }
 )
@@ -85,15 +81,7 @@ export const Reducer = createSlice({
         },
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message
-            console.log(state.excerciseData)
+
         }
-
-        // [loginUser.fulfilled]: (state, action) => {
-        //         state.loginData = action.payload.data;
-
-        // },
-        // [todos.fulfilled]:(state,action)=>{
-        //     state.usersData=action.payload.data;
-        // }
     }
 })

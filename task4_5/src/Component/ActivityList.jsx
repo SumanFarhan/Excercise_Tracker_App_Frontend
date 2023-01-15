@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
@@ -11,8 +11,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import {useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
 import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
-
-
 import { useDispatch } from 'react-redux'
 
 const ActivityList = () => {
@@ -40,11 +38,13 @@ const ActivityList = () => {
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false);
   const stateData = useSelector(state => state.excercise.excerciseData)
-  // const val = dispatch(getExcercise())
-  // const stateData = useSelector(state => state.excerciseData)
+
+  useEffect(() => {
+    dispatch(getExcercise())
+    console.log("inside useEffect", stateData)
+  },[])
   return (
     <>
-    {/* {console.log(val)} */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
@@ -111,63 +111,6 @@ const ActivityList = () => {
             </Card>
             )
           })}
-    
-          {/* <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card> */}
         </div>
       </div>
     </>

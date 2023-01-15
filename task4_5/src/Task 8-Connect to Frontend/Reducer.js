@@ -33,6 +33,19 @@ export const getExcercise = createAsyncThunk(
     }
 )
 
+export const getOneExcercise = createAsyncThunk(
+    'excercise/getOneExcercise',
+    async (data, thunkApi) => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+        const res = await fetch('http://localhost:3007/getOneActivity', requestOptions)
+        return res.json();
+    }
+)
+
 export const updateExcercise = createAsyncThunk(
     'excercise/updateExcercise',
     async (data, thunkApi) => {
@@ -60,6 +73,7 @@ export const deleteExcercise = createAsyncThunk(
 
 const initialState = {
     excerciseData:[],
+    getOneData:[],
     redirectToDashboard: false
 }
 
@@ -81,6 +95,10 @@ export const Reducer = createSlice({
         },
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message
+
+        },
+        [getOneExcercise.fulfilled]:(state,action)=>{
+            state.getOneData=action.payload.message
 
         }
     }

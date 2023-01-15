@@ -10,7 +10,7 @@ import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup';
 import {useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
-import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
+import {getExcercise,updateExcercise,getOneExcercise} from '../Task 8-Connect to Frontend/Reducer'
 import { useDispatch } from 'react-redux'
 
 const ActivityList = () => {
@@ -34,10 +34,25 @@ const ActivityList = () => {
       }
     })
   }
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true)
-  const handleClose = () => setShow(false);
   const stateData = useSelector(state => state.excercise.excerciseData)
+  const stateoneData = useSelector(state => state.excercise.getOneExcercise)
+ 
+
+  const [show, setShow] = useState(false);
+
+  const handleShow = (id) => {
+    dispatch(getOneExcercise(id))
+    console.log("data to edit here",stateoneData)
+    setShow(true)
+  }
+
+  // function callEditfunction(id){
+  //  var editOneData = dispatch(getOneExcercise(id))
+  //   console.log("get one data here", editOneData )
+  // }
+
+  const handleClose = () => setShow(false);
+
 
   useEffect(() => {
     dispatch(getExcercise())
@@ -91,10 +106,10 @@ const ActivityList = () => {
         <div className="cardsList">
           {stateData?.map((v,i)=>{
             return (
-              <Card style={{ width: '18rem' }}>
+              <Card style={{ width: '18rem' }} key={v._id}>
               <Card.Body>
                 <Card.Title>{v.name}
-                  <Button variant="primary" className='buttonUpdate' onClick={handleShow}>
+                  <Button variant="primary" className='buttonUpdate' onClick={()=>handleShow(v._id)}>
                     <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
                   </Button>
                   <DeleteIcon />

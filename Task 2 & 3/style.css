@@ -13,9 +13,12 @@ input{
     height: 100vh;
     /* text-align: center; */
 }
+<<<<<<< Updated upstream
 .heading{
 
 }
+=======
+>>>>>>> Stashed changes
 
 .rightSide {
     width: 50%;
@@ -49,6 +52,10 @@ input{
   [type=radio]:checked + img {
     outline: 2px solid #f00;
   }
+<<<<<<< Updated upstream
+=======
+  
+>>>>>>> Stashed changes
 .activityList{
     background-color: #FEFCFA;
 }

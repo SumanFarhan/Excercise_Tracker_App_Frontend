@@ -30,7 +30,9 @@ export const getExcercise = createAsyncThunk(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
+        console.log("inside get request")
         const res = await fetch('http://localhost:3007/getActivity', requestOptions)
+        // console.log("inside after get request",res)
         return res.json();
     }
 )
@@ -82,7 +84,7 @@ export const Reducer = createSlice({
             alert("Fill all data")
         },
         [getExcercise.fulfilled]:(state,action)=>{
-            state.excerciseData=action.payload.data
+            state.excerciseData=action.payload.message
             console.log(state.excerciseData)
         }
 

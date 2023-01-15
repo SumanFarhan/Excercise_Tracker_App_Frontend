@@ -39,11 +39,12 @@ const ActivityList = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false);
-  const val = dispatch(getExcercise())
+  const stateData = useSelector(state => state.excercise.excerciseData)
+  // const val = dispatch(getExcercise())
   // const stateData = useSelector(state => state.excerciseData)
   return (
     <>
-    {console.log(val)}
+    {/* {console.log(val)} */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
@@ -88,40 +89,30 @@ const ActivityList = () => {
           </Container>
         </Navbar>
         <div className="cardsList">
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title
-                <Button variant="primary" className='buttonUpdate' onClick={handleShow}>
-                  <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
-                </Button>
-                <DeleteIcon />
-              </Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroup.Item>Activity Type:</ListGroup.Item>
-              <ListGroup.Item>Duration:</ListGroup.Item>
-              <ListGroup.Item>Date:</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <Card style={{ width: '18rem' }}>
+          {stateData?.map((v,i)=>{
+            return (
+              <Card style={{ width: '18rem' }}>
+              <Card.Body>
+                <Card.Title>{v.name}
+                  <Button variant="primary" className='buttonUpdate' onClick={handleShow}>
+                    <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
+                  </Button>
+                  <DeleteIcon />
+                </Card.Title>
+                <Card.Text>
+                  {v.description}
+                </Card.Text>
+              </Card.Body>
+              <ListGroup className="list-group-flush">
+            <ListGroup.Item>Activity Type:{v.activitytype}</ListGroup.Item>
+            <ListGroup.Item>Duration:{v.duration}</ListGroup.Item>
+            <ListGroup.Item>Date:{v.date}</ListGroup.Item>
+              </ListGroup>
+            </Card>
+            )
+          })}
+    
+          {/* <Card style={{ width: '18rem' }}>
             <Card.Body>
               <Card.Title>Card Title</Card.Title>
               <Card.Text>
@@ -163,6 +154,20 @@ const ActivityList = () => {
               <ListGroup.Item>Date:</ListGroup.Item>
             </ListGroup>
           </Card>
+          <Card style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title>Card Title</Card.Title>
+              <Card.Text>
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+              </Card.Text>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item>Activity Type:</ListGroup.Item>
+              <ListGroup.Item>Duration:</ListGroup.Item>
+              <ListGroup.Item>Date:</ListGroup.Item>
+            </ListGroup>
+          </Card> */}
         </div>
       </div>
     </>

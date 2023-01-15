@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
 
 import { addActivity } from '../Task 8-Connect to Frontend/Reducer'
 import { Link, useNavigate } from 'react-router-dom'
@@ -22,10 +23,13 @@ const RightSide = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const redirectToDashboard = useSelector(state => state.excercise.redirectToDashboard)
-
+  const excerciseData = useSelector(state => state.excercise.excerciseData)
+  
 
   useEffect(() => {
     if (redirectToDashboard) {
+       dispatch(getExcercise())
+      console.log("inside useEffect",excerciseData)
       navigate("/dashboard");
     }
   }, [redirectToDashboard])

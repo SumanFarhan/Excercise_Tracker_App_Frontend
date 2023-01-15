@@ -89,11 +89,14 @@ background-color: #fefcfa;
   margin: 30px 0 35px 0;
   transform: translate(-50%, -50%);
   border-radius: 5px;
-  width: 1100px;
-  background-color: orange;
-  height: 500px;
+  border:3px solid #C8102E;
+  width: 1200px;
+  background-color: #fefcfa;
+  height: 550px;
   align-items: center;
   justify-content: center;
+  overflow-x:hidden;
+  overflow-y:auto
 }
 .card-body{
   background-color: #C8102E !important;
@@ -103,9 +106,13 @@ background-color: #fefcfa;
 .card {
   background-color: #FEFCFA !important;
   border: #C8102E 2px solid !important;
-  margin:  50px !important;
+  margin:5px 0 10px 30px !important;
 }
-
+.buttonUpdate{
+  background: transparent !important;
+  border: none !important;
+  /* width: 1px !important; */
+}
 .list-group-item {
   background-color: #FEFCFA!important;
   border: none !important;

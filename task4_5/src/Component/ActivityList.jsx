@@ -10,7 +10,7 @@ import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup';
 import {useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
-import getExcercise from '../Task 8-Connect to Frontend/Reducer'
+import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
 
 
 import { useDispatch } from 'react-redux'
@@ -25,6 +25,7 @@ const ActivityList = () => {
   });
 
   const dispatch = useDispatch()
+  const excerciseData = useSelector(state => state.excercise.excerciseData)
 
   const Setting = (event) => {
     const { name, value } = event.target
@@ -38,9 +39,11 @@ const ActivityList = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false);
-  const stateData = useSelector(state => state.excerciseData)
+  const val = dispatch(getExcercise())
+  // const stateData = useSelector(state => state.excerciseData)
   return (
     <>
+    {console.log(val)}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>

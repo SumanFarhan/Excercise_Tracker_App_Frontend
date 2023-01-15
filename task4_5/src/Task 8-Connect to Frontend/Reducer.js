@@ -77,13 +77,11 @@ export const Reducer = createSlice({
             state.response = action.payload.message;
             state.redirectToDashboard = true;
             alert(state.response);
-
         },
         [addActivity.rejected]: (state) => {
             alert("Fill all data")
         },
         [getExcercise.fulfilled]:(state,action)=>{
-           
             state.excerciseData=action.payload.data
             console.log(state.excerciseData)
         }

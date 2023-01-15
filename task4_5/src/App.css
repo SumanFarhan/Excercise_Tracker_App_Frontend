@@ -27,6 +27,23 @@
   width: 50%;
   margin-top: 40px;
 }
+.activityTypeImage{
+  margin-right: 20px;
+}
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+[type=radio] + img {
+  cursor: pointer;
+}
+
+[type=radio]:checked + img {
+  outline: 2px solid black;
+}
 
 .button {
   width: 70%;
@@ -111,7 +128,6 @@ background-color: #fefcfa;
 .buttonUpdate{
   background: transparent !important;
   border: none !important;
-  /* width: 1px !important; */
 }
 .list-group-item {
   background-color: #FEFCFA!important;

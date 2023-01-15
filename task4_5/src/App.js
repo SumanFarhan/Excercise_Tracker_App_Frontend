@@ -7,14 +7,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 const App = () => {
   return (
     <>
-            <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<ExcerciseActivity />}></Route>
-            <Route path="/dashboard" element={<ActivityList />}> </Route>
-            </Routes>
-        </BrowserRouter>
-      {/* <ExcerciseActivity/> */}
-      {/* <ActivityList /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ExcerciseActivity />}></Route>
+          <Route path="/dashboard" element={<ActivityList />}> </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

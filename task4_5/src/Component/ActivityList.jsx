@@ -7,6 +7,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
+import InputGroup from 'react-bootstrap/InputGroup';
+import {useSelector } from 'react-redux'
+import Form from 'react-bootstrap/Form';
+import getExcercise from '../Task 8-Connect to Frontend/Reducer'
 
 
 import { useDispatch } from 'react-redux'
@@ -15,7 +19,7 @@ const ActivityList = () => {
   const [addExcercise, setaddExcercise] = useState({
     name: "",
     description: "",
-    activityType:['run','walk','hike','swim','ride'],
+    activityType: ['run', 'walk', 'hike', 'swim', 'ride'],
     duration: "",
     date: "",
   });
@@ -34,6 +38,7 @@ const ActivityList = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true)
   const handleClose = () => setShow(false);
+  const stateData = useSelector(state => state.excerciseData)
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -48,13 +53,14 @@ const ActivityList = () => {
             <textarea type="text" value={addExcercise.description} name="description" onChange={Setting} />
           </label>
           <label>Activity type
-            <select >
-              <option name="run" value={addExcercise.activityType[0]}  onChange={Setting}>Run</option>
-              <option name="hike" value={addExcercise.activityType[2]}  onChange={Setting} >Hike</option>
-              <option name="swim" value={addExcercise.activityType[3]}  onChange={Setting} >Swim</option>
-              <option name="bicycleRide" value={addExcercise.activityType[4]}  onChange={Setting}>Ride</option>
-              <option name="walk" value={addExcercise.activityType[1]}  onChange={Setting}>Walk</option>
-            </select>
+          <InputGroup className="mb-3">
+              <Form.Control
+                type='text'
+                name="activitytype"
+                value={addExcercise.activitytype}
+                onChange={Setting}
+              />
+            </InputGroup>
           </label>
           <label>Duration
             <input type="email" value={addExcercise.duration} name="duration" onChange={Setting} />

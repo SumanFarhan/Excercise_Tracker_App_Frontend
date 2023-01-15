@@ -8,9 +8,11 @@ export const addActivity = createAsyncThunk(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
+        console.log('data hereeeeeee',JSON.stringify(data))
         
-        if(data == ''){
-            console.log('data is empty');
+        if(data.name == '' || data.activityType == '' || data.description == '' || data.duration == '' || data.date == '')
+        {
+          alert('some fields are empty');
         }
         else{
         const res = await fetch('http://localhost:3007/addActivity', requestOptions)
@@ -59,6 +61,7 @@ export const deleteExcercise = createAsyncThunk(
 )
 
 const initialState = {
+    excerciseData:[],
     redirectToDashboard: false
 }
 
@@ -79,6 +82,11 @@ export const Reducer = createSlice({
         [addActivity.rejected]: (state) => {
             alert("Fill all data")
         },
+        [getExcercise.fulfilled]:(state,action)=>{
+           
+            state.excerciseData=action.payload.data
+            console.log(state.excerciseData)
+        }
 
         // [loginUser.fulfilled]: (state, action) => {
         //         state.loginData = action.payload.data;

@@ -15,7 +15,7 @@ const RightSide = () => {
   const [addExcercise, setaddExcercise] = useState({
     name: "",
     description: "",
-    activityType:[run,walk,hike,swim,ride],
+    activityType:['run','walk','hike','swim','ride'],
     duration: "",
     date: "",
   });

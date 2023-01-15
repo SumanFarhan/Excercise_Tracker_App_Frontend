@@ -6,8 +6,8 @@ import ActivityList from './Component/ActivityList'
 const App = () => {
   return (
     <>
-      {/* <ExcerciseActivity/> */}
-      <ActivityList />
+      <ExcerciseActivity/>
+      {/* <ActivityList /> */}
     </>
   )
 }

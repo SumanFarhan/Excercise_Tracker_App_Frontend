@@ -7,14 +7,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useState } from 'react';
+
 import { useDispatch } from 'react-redux'
 
 const ActivityList = () => {
   const [addExcercise, setaddExcercise] = useState({
     name: "",
     description: "",
-    activityType: [run, walk, hike, swim, ride],
+    activityType:['run','walk','hike','swim','ride'],
     duration: "",
     date: "",
   });
@@ -41,10 +41,10 @@ const ActivityList = () => {
         </Modal.Header>
         <Modal.Body><form>
           <label>NAME
-            <input type="text" value={obj.name} name="name" onChange={add} />
+            <input type="text" value={addExcercise.name} name="name" onChange={Setting} />
           </label>
           <label>Description
-            <textarea type="text" value={obj.name} name="name" onChange={add} />
+            <textarea type="text" value={addExcercise.description} name="description" onChange={Setting} />
           </label>
           <label>Activity type
             <select >
@@ -56,10 +56,10 @@ const ActivityList = () => {
             </select>
           </label>
           <label>Duration
-            <input type="email" value={obj.email} name="email" onChange={add} />
+            <input type="email" value={addExcercise.duration} name="duration" onChange={Setting} />
           </label>
           <label>Date
-            <input type="email" value={obj.email} name="email" onChange={add} />
+            <input type="email" value={addExcercise.date} name="date" onChange={Setting} />
           </label>
         </form></Modal.Body>
         <Modal.Footer>

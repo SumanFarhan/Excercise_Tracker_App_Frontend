@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import axios from "axios";
 
 
+
 const ActivityList = () => {
   const [addExcercise, setaddExcercise] = useState({
     name: "",
@@ -25,7 +26,6 @@ const ActivityList = () => {
   });
 
   const dispatch = useDispatch()
-  const excerciseData = useSelector(state => state.excercise.excerciseData)
 
   const Setting = (event) => {
     const { name, value } = event.target
@@ -38,22 +38,32 @@ const ActivityList = () => {
   }
 
   const stateData = useSelector(state => state.excercise.excerciseData)
+  const valueEdited = useSelector(state => state.excercise.valueEdited)
   const [show, setShow] = useState(false);
-  const [activityData, setactivityData] = useState([]);
+  // const [activityData, setactivityData] = useState([]);
+
+
+  useEffect(() => {
+    if (valueEdited) {
+
+    }
+  }, [valueEdited])
 
   const handleShow = async (id) => {
     dispatch(getOneExcercise(id))
     const data = await getActivityData(id);
-    setactivityData(data.data.message);
-    // setactivityData(activityData);
+    setaddExcercise(data.data.message);
     setShow(true)
-    return activityData
+  }
+
+  function ModalSave() {
+    dispatch(updateExcercise(addExcercise))
+    setShow(false);
   }
 
   async function getActivityData(id) {
     const response = await axios.get(`http://localhost:3007/getOneActivity/${id}`)
       .catch(error => console.log(error));
-    console.log("issue here -- then", response.data.message)
     return response;
   };
 
@@ -66,17 +76,16 @@ const ActivityList = () => {
 
   return (
     <>
-   
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
         </Modal.Header>
         <Modal.Body><form>
           <label>Name
-            <input type="text" value={activityData.name} name="name" onChange={Setting} />
+            <input type="text" value={addExcercise.name} name="name" onChange={Setting} />
           </label>
           <label>Description
-            <textarea type="text" value={activityData.description} name="description" onChange={Setting} />
+            <textarea type="text" value={addExcercise.description} name="description" onChange={Setting} />
           </label>
           <label>Activity type
           <InputGroup className="mb-3">
@@ -89,17 +98,17 @@ const ActivityList = () => {
             </InputGroup>
           </label>
           <label>Duration
-            <input type="email" value={activityData.duration} name="duration" onChange={Setting} />
+            <input type="email" value={addExcercise.duration} name="duration" onChange={Setting} />
           </label>
           <label>Date
-            <input type="email" value={activityData.date} name="date" onChange={Setting} />
+            <input type="email" value={addExcercise.date} name="date" onChange={Setting} />
           </label>
         </form></Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" style={{ color: '#fefcfa', backgroundColor: '#c8102e', border: 'none' }} onClick={handleClose}>
+          <Button variant="primary" style={{ color: '#fefcfa', backgroundColor: '#c8102e', border: 'none' }} onClick={ModalSave}>
             Save Changes
           </Button>
         </Modal.Footer>

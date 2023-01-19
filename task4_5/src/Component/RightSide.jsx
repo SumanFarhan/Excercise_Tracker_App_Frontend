@@ -21,8 +21,7 @@ const RightSide = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const redirectToDashboard = useSelector(state => state.excercise.redirectToDashboard)
-  const excerciseData = useSelector(state => state.excercise.excerciseData)
-  
+
   useEffect(() => {
     if (redirectToDashboard) {
       navigate("/dashboard");
@@ -56,15 +55,15 @@ const RightSide = () => {
       </InputGroup>
       <h5>ACTIVITY TYPE</h5>
       <div className="mb-3">
-      <InputGroup className="mb-3">
-        <Form.Control
-          type='text'
-          name="activitytype"
-          value={addExcercise.activitytype}
-          onChange={Setting}
-        />
-      </InputGroup>
-        
+        <InputGroup className="mb-3">
+          <Form.Control
+            type='text'
+            name="activitytype"
+            value={addExcercise.activitytype}
+            onChange={Setting}
+          />
+        </InputGroup>
+
       </div>
       <h5>DURATION</h5>
       <InputGroup className="mb-3">
@@ -84,7 +83,11 @@ const RightSide = () => {
           onChange={Setting}
         />
       </InputGroup>
-      <div className="button"><Button variant="primary" className='btnAdd' onClick={() => dispatch(addActivity(addExcercise))}><AddCircleIcon style={{ marginRight: "10px", marginBottom: "2px" }} />Excercise Activty</Button></div>
+      <div className="button"><Button variant="primary" className='btnAdd' onClick={() => dispatch(addActivity(addExcercise))}>
+        <AddCircleIcon style={{ marginRight: "10px", marginBottom: "2px" }} />
+        Excercise Activty
+        </Button>
+      </div>
     </>
   )
 }

@@ -74,7 +74,8 @@ export const deleteExcercise = createAsyncThunk(
 const initialState = {
     excerciseData:[],
     getOneData:[],
-    redirectToDashboard: false
+    redirectToDashboard: false,
+    valueEdited: false
 }
 
 export const Reducer = createSlice({
@@ -95,11 +96,17 @@ export const Reducer = createSlice({
         },
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message
-
         },
         [getOneExcercise.fulfilled]:(state,action)=>{
             state.getOneData=action.payload.message
-
+        },
+        [updateExcercise.fulfilled]:(state,action)=>{
+            state.response = action.payload.message;
+            state.redirectToDashboard = true;
+           alert('edited')
+        },
+        [updateExcercise.pending]:(state,action)=>{
+            console.log('pending');
         }
     }
 })

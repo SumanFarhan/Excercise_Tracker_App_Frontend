@@ -10,54 +10,27 @@ import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup';
 import {useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
-import {getExcercise,updateExcercise,getOneExcercise} from '../Task 8-Connect to Frontend/Reducer'
+import HomeIcon from '@mui/icons-material/Home';
+import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
 import { useDispatch } from 'react-redux'
+import { useNavigate,Link } from 'react-router-dom';
 
-const ActivityList = () => {
-  const [addExcercise, setaddExcercise] = useState({
-    name: "",
-    description: "",
-    activityType: ['run', 'walk', 'hike', 'swim', 'ride'],
-    duration: "",
-    date: "",
-  });
-
+const ActivityList = ({addExcercise,setaddExcercise}) => {
+  const [show, setShow] = useState(false)
   const dispatch = useDispatch()
-  const excerciseData = useSelector(state => state.excercise.excerciseData)
-
-  const Setting = (event) => {
-    const { name, value } = event.target
-    setaddExcercise((data) => {
-      return {
-        ...data,
-        [name]: value
-      }
-    })
-  }
   const stateData = useSelector(state => state.excercise.excerciseData)
-  const stateoneData = useSelector(state => state.excercise.getOneExcercise)
- 
-
-  const [show, setShow] = useState(false);
-
-  const handleShow = (id) => {
-    dispatch(getOneExcercise(id))
-    console.log("data to edit here",stateoneData)
+  const navigate=useNavigate()
+  const handleShow = () => {
+    // navigate("/")
+    // setaddExcercise(addExcercise)
     setShow(true)
   }
-
-  // function callEditfunction(id){
-  //  var editOneData = dispatch(getOneExcercise(id))
-  //   console.log("get one data here", editOneData )
-  // }
-
   const handleClose = () => setShow(false);
-
-
   useEffect(() => {
     dispatch(getExcercise())
     console.log("inside useEffect", stateData)
   },[])
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -65,28 +38,47 @@ const ActivityList = () => {
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
         </Modal.Header>
         <Modal.Body><form>
-          <label>NAME
-            <input type="text" value={addExcercise.name} name="name" onChange={Setting} />
+          <div className='labelModal'>
+          <label>Name:
+            <input type="text" 
+            className='inputModal'
+            //  value={addExcercise.name} 
+            name="name"  />
           </label>
-          <label>Description
-            <textarea type="text" value={addExcercise.description} name="description" onChange={Setting} />
+          </div>
+          <div className='labelModal'>
+          <label>Description:
+            <textarea type="text" 
+            className='inputModal'
+            // value={addExcercise.description} 
+            name="description"  />
           </label>
-          <label>Activity type
-          <InputGroup className="mb-3">
-              <Form.Control
-                type='text'
-                name="activitytype"
-                value={addExcercise.activitytype}
-                onChange={Setting}
-              />
-            </InputGroup>
+          </div>
+          <div className='labelModal'>
+          <label>Activity type:
+          <input type="text" 
+          className='inputModal'
+                name="activitytype" 
+                // value={addExcercise.activitytype}
+/>
           </label>
-          <label>Duration
-            <input type="email" value={addExcercise.duration} name="duration" onChange={Setting} />
+          </div>
+          <div className='labelModal'>
+          <label>Duration:
+            <input type="time" 
+            className='inputModal'
+            // value={addExcercise.duration} 
+            name="duration"  />
           </label>
-          <label>Date
-            <input type="email" value={addExcercise.date} name="date" onChange={Setting} />
+          </div>
+          <div className='labelModal'>
+          <label >Date:
+            <input type="date" 
+            className='inputModal'
+            // value={addExcercise.date} 
+            name="date"  />
           </label>
+          </div>
         </form></Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -100,7 +92,7 @@ const ActivityList = () => {
       <div className='activityList'>
         <Navbar>
           <Container className='justify-content-center'>
-            <Navbar.Brand> <h1 className='headingList'>Excercise Tracker App</h1></Navbar.Brand>
+            <Navbar.Brand> <h1 className='headingList'>Excercise Tracker App</h1> <Link to="/"><HomeIcon/></Link></Navbar.Brand>
           </Container>
         </Navbar>
         <div className="cardsList">
@@ -109,7 +101,7 @@ const ActivityList = () => {
               <Card style={{ width: '18rem' }} key={v._id}>
               <Card.Body>
                 <Card.Title>{v.name}
-                  <Button variant="primary" className='buttonUpdate' onClick={()=>handleShow(v._id)}>
+                  <Button variant="primary" className='buttonUpdate' onClick={handleShow}>
                     <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
                   </Button>
                   <DeleteIcon />

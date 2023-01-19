@@ -1,22 +1,20 @@
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const addActivity = createAsyncThunk(
     'excercise/addActivity',
-    async (data, thunkApi) => {
+    async (data,thunkApi) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
-        
-        if(data.name == '' || data.activityType == '' || data.description == '' || data.duration == '' || data.date == '')
-        {
-          alert('some fields are empty');
+        const response = await fetch('http://localhost:3007/addActivity', requestOptions)
+        if (!response.ok) {
+            throw new Error("response error")
         }
-        else{
-        const res = await fetch('http://localhost:3007/addActivity', requestOptions)
-        return res.json();
-        }
+        const res = await response.json()
+        return res
     }
 )
 
@@ -48,14 +46,21 @@ export const getOneExcercise = createAsyncThunk(
 
 export const updateExcercise = createAsyncThunk(
     'excercise/updateExcercise',
-    async (data, thunkApi) => {
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        };
-        const res = await fetch('http://localhost:3007/editActivity', requestOptions)
-        return res.json();
+    async (data,{rejectWithValue}) => {
+        try{
+            const{_id,name,description,activitytype,duration,date}=data
+            const res = await fetch('http://localhost:3007/editActivity',_id,{name,description,activitytype,duration,date})
+            return res.json();
+        }catch(error){
+            return rejectWithValue(error.response.data)
+        }
+        // const requestOptions = {
+        //     method: 'PUT',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(data)
+        // };
+        // const res = await fetch('http://localhost:3007/editActivity', requestOptions)
+        // return res.json();
     }
 )
 export const deleteExcercise = createAsyncThunk(
@@ -73,7 +78,8 @@ export const deleteExcercise = createAsyncThunk(
 
 const initialState = {
     excerciseData:[],
-    getOneData:[],
+    status:"",
+    getError:"",
     redirectToDashboard: false
 }
 
@@ -82,24 +88,27 @@ export const Reducer = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        [addActivity.pending]: () => {
-            console.log('pending');
+        [addActivity.pending]: (state) => {
+            state.redirectToDashboard = false
         },
         [addActivity.fulfilled]: (state, action) => {
-            state.response = action.payload.message;
-            state.redirectToDashboard = true;
-            alert(state.response);
+                state.response=action.payload.message
+                state.redirectToDashboard = true
+                state.status="success"
+                alert(state.response)
         },
-        [addActivity.rejected]: (state) => {
-            alert("Fill all data")
+        [addActivity.rejected]: (state,action) => {
+            state.status="rejected add"
         },
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message
-
         },
-        [getOneExcercise.fulfilled]:(state,action)=>{
-            state.getOneData=action.payload.message
-
+        [updateExcercise.fulfilled]: (state, action) => {
+            const updateCheck=state.excerciseData.map((v)=>v._id === action.payload._id ? action.payload : v)
+            state.excerciseData=updateCheck
+            state.status="Update success"
+            // state.response=action.payload.message
+            // alert(state.response)
         }
-    }
-})
+    }}
+)

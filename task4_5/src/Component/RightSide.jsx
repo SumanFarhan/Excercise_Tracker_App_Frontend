@@ -3,26 +3,26 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Alert from 'react-bootstrap/Alert'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { addActivity } from '../Task 8-Connect to Frontend/Reducer'
-import { Link, useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 
 
-const RightSide = () => {
-  const [addExcercise, setaddExcercise] = useState({
-    name: "",
-    description: "",
-    activitytype: "",
-    duration: "",
-    date: "",
-  });
+const RightSide = ({addExcercise, setaddExcercise}) => {
+  // const [addExcercise, setaddExcercise] = useState({
+  //   name: "",
+  //   description: "",
+  //   activitytype: "",
+  //   duration: "",
+  //   date: "",
+  // });
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const redirectToDashboard = useSelector(state => state.excercise.redirectToDashboard)
-  const excerciseData = useSelector(state => state.excercise.excerciseData)
-  
+  const excerciseStatus = useSelector(state => state.excercise)
   useEffect(() => {
     if (redirectToDashboard) {
       navigate("/dashboard");
@@ -85,6 +85,9 @@ const RightSide = () => {
         />
       </InputGroup>
       <div className="button"><Button variant="primary" className='btnAdd' onClick={() => dispatch(addActivity(addExcercise))}><AddCircleIcon style={{ marginRight: "10px", marginBottom: "2px" }} />Excercise Activty</Button></div>
+      {excerciseStatus.status === 'rejected add' ? (
+      <Alert variant="danger" style={{width:'500px'}}>Fill all Fields</Alert>
+      ):null}
     </>
   )
 }

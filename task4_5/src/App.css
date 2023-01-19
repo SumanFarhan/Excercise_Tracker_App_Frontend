@@ -39,6 +39,7 @@
 
 [type=radio] + img {
   cursor: pointer;
+  margin-left: 20px;
 }
 
 [type=radio]:checked + img {
@@ -136,4 +137,12 @@ background-color: #fefcfa;
   font-family: 'IBM Plex Sans', cursive !important;
   font-size: 16px !important;
   font-weight: 800 !important;
+}
+.labelModal{
+  display: flex;
+  justify-content: center;
+}
+.inputModal{
+  margin-top: 10px;
+  margin-left: 40px;
 }

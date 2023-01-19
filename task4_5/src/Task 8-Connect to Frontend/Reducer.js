@@ -91,7 +91,7 @@ export const Reducer = createSlice({
             alert(state.response);
         },
         [addActivity.rejected]: (state) => {
-            alert("Fill all data")
+            alert("Server is down, Please try again")
         },
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message

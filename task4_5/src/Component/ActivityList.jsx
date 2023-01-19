@@ -8,10 +8,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup';
-import {useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
-import {getExcercise,updateExcercise,getOneExcercise} from '../Task 8-Connect to Frontend/Reducer'
+import { getExcercise, updateExcercise, getOneExcercise } from '../Task 8-Connect to Frontend/Reducer'
 import { useDispatch } from 'react-redux'
+import axios from "axios";
+
 
 const ActivityList = () => {
   const [addExcercise, setaddExcercise] = useState({
@@ -35,29 +37,35 @@ const ActivityList = () => {
     })
   }
   const stateData = useSelector(state => state.excercise.excerciseData)
-  const stateoneData = useSelector(state => state.excercise.getOneExcercise)
- 
+  const stateoneData = useSelector(state => state.excercise.getOneData)
 
   const [show, setShow] = useState(false);
 
   const handleShow = (id) => {
     dispatch(getOneExcercise(id))
-    console.log("data to edit here",stateoneData)
+    getActivityData(id)
     setShow(true)
   }
 
-  // function callEditfunction(id){
-  //  var editOneData = dispatch(getOneExcercise(id))
-  //   console.log("get one data here", editOneData )
-  // }
+  async function getActivityData(id) {
+    let activityData;
+    axios
+      .get(`http://localhost:3007/getOneActivity/${id}`)
+      .then(name =>{
+        activityData = name.data.message
+        console.log('Activity Data  1', activityData)
+        console.log('Activity Data  2', name.data.message)
+      })
+      .catch(error => console.log(error));
+  };
 
   const handleClose = () => setShow(false);
-
 
   useEffect(() => {
     dispatch(getExcercise())
     console.log("inside useEffect", stateData)
-  },[])
+  }, [])
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -65,7 +73,7 @@ const ActivityList = () => {
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
         </Modal.Header>
         <Modal.Body><form>
-          <label>NAME
+          <label>Name
             <input type="text" value={addExcercise.name} name="name" onChange={Setting} />
           </label>
           <label>Description
@@ -104,26 +112,26 @@ const ActivityList = () => {
           </Container>
         </Navbar>
         <div className="cardsList">
-          {stateData?.map((v,i)=>{
+          {stateData?.map((v, i) => {
             return (
               <Card style={{ width: '18rem' }} key={v._id}>
-              <Card.Body>
-                <Card.Title>{v.name}
-                  <Button variant="primary" className='buttonUpdate' onClick={()=>handleShow(v._id)}>
-                    <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
-                  </Button>
-                  <DeleteIcon />
-                </Card.Title>
-                <Card.Text>
-                  {v.description}
-                </Card.Text>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-            <ListGroup.Item>Activity Type:{v.activitytype}</ListGroup.Item>
-            <ListGroup.Item>Duration:{v.duration}</ListGroup.Item>
-            <ListGroup.Item>Date:{v.date}</ListGroup.Item>
-              </ListGroup>
-            </Card>
+                <Card.Body>
+                  <Card.Title>{v.name}
+                    <Button variant="primary" className='buttonUpdate' onClick={() => handleShow(v._id)}>
+                      <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
+                    </Button>
+                    <DeleteIcon />
+                  </Card.Title>
+                  <Card.Text>
+                    {v.description}
+                  </Card.Text>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>Activity Type:{v.activitytype}</ListGroup.Item>
+                  <ListGroup.Item>Duration:{v.duration}</ListGroup.Item>
+                  <ListGroup.Item>Date:{v.date}</ListGroup.Item>
+                </ListGroup>
+              </Card>
             )
           })}
         </div>

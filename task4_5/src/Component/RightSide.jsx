@@ -22,7 +22,7 @@ const RightSide = ({addExcercise, setaddExcercise}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const redirectToDashboard = useSelector(state => state.excercise.redirectToDashboard)
-  const excerciseStatus = useSelector(state => state.excercise)
+
   useEffect(() => {
     if (redirectToDashboard) {
       navigate("/dashboard");
@@ -56,15 +56,15 @@ const RightSide = ({addExcercise, setaddExcercise}) => {
       </InputGroup>
       <h5>ACTIVITY TYPE</h5>
       <div className="mb-3">
-      <InputGroup className="mb-3">
-        <Form.Control
-          type='text'
-          name="activitytype"
-          value={addExcercise.activitytype}
-          onChange={Setting}
-        />
-      </InputGroup>
-        
+        <InputGroup className="mb-3">
+          <Form.Control
+            type='text'
+            name="activitytype"
+            value={addExcercise.activitytype}
+            onChange={Setting}
+          />
+        </InputGroup>
+
       </div>
       <h5>DURATION</h5>
       <InputGroup className="mb-3">

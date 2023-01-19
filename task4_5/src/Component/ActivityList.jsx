@@ -8,15 +8,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import InputGroup from 'react-bootstrap/InputGroup';
-import {useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Form from 'react-bootstrap/Form';
-import HomeIcon from '@mui/icons-material/Home';
-import {getExcercise} from '../Task 8-Connect to Frontend/Reducer'
+import { getExcercise, updateExcercise, getOneExcercise } from '../Task 8-Connect to Frontend/Reducer'
 import { useDispatch } from 'react-redux'
-import { useNavigate,Link } from 'react-router-dom';
+import axios from "axios";
 
-const ActivityList = ({addExcercise,setaddExcercise}) => {
-  const [show, setShow] = useState(false)
+
+const ActivityList = () => {
+  const [addExcercise, setaddExcercise] = useState({
+    name: "",
+    description: "",
+    activityType: ['run', 'walk', 'hike', 'swim', 'ride'],
+    duration: "",
+    date: "",
+  });
+
   const dispatch = useDispatch()
   const stateData = useSelector(state => state.excercise.excerciseData)
   const navigate=useNavigate()
@@ -84,7 +91,7 @@ const ActivityList = ({addExcercise,setaddExcercise}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" style={{ color: '#fefcfa', backgroundColor: '#c8102e', border: 'none' }} onClick={handleClose}>
+          <Button variant="primary" style={{ color: '#fefcfa', backgroundColor: '#c8102e', border: 'none' }} onClick={ModalSave}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -96,26 +103,26 @@ const ActivityList = ({addExcercise,setaddExcercise}) => {
           </Container>
         </Navbar>
         <div className="cardsList">
-          {stateData?.map((v,i)=>{
+          {stateData?.map((v, i) => {
             return (
               <Card style={{ width: '18rem' }} key={v._id}>
-              <Card.Body>
-                <Card.Title>{v.name}
-                  <Button variant="primary" className='buttonUpdate' onClick={handleShow}>
-                    <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
-                  </Button>
-                  <DeleteIcon />
-                </Card.Title>
-                <Card.Text>
-                  {v.description}
-                </Card.Text>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-            <ListGroup.Item>Activity Type:{v.activitytype}</ListGroup.Item>
-            <ListGroup.Item>Duration:{v.duration}</ListGroup.Item>
-            <ListGroup.Item>Date:{v.date}</ListGroup.Item>
-              </ListGroup>
-            </Card>
+                <Card.Body>
+                  <Card.Title>{v.name}
+                    <Button variant="primary" className='buttonUpdate' onClick={() => handleShow(v._id)}>
+                      <EditIcon style={{ marginLeft: "80px", marginBottom: "2px" }} />
+                    </Button>
+                    <DeleteIcon />
+                  </Card.Title>
+                  <Card.Text>
+                    {v.description}
+                  </Card.Text>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>Activity Type:{v.activitytype}</ListGroup.Item>
+                  <ListGroup.Item>Duration:{v.duration}</ListGroup.Item>
+                  <ListGroup.Item>Date:{v.date}</ListGroup.Item>
+                </ListGroup>
+              </Card>
             )
           })}
         </div>

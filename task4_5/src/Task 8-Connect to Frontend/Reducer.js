@@ -81,6 +81,9 @@ const initialState = {
     status:"",
     getError:"",
     redirectToDashboard: false
+    getOneData:[],
+    redirectToDashboard: false,
+    valueEdited: false
 }
 
 export const Reducer = createSlice({
@@ -103,12 +106,16 @@ export const Reducer = createSlice({
         [getExcercise.fulfilled]:(state,action)=>{
             state.excerciseData=action.payload.message
         },
-        [updateExcercise.fulfilled]: (state, action) => {
-            const updateCheck=state.excerciseData.map((v)=>v._id === action.payload._id ? action.payload : v)
-            state.excerciseData=updateCheck
-            state.status="Update success"
-            // state.response=action.payload.message
-            // alert(state.response)
+        [getOneExcercise.fulfilled]:(state,action)=>{
+            state.getOneData=action.payload.message
+        },
+        [updateExcercise.fulfilled]:(state,action)=>{
+            state.response = action.payload.message;
+            state.redirectToDashboard = true;
+           alert('edited')
+        },
+        [updateExcercise.pending]:(state,action)=>{
+            console.log('pending');
         }
     }}
 )

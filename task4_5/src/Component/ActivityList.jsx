@@ -36,27 +36,25 @@ const ActivityList = () => {
       }
     })
   }
+
   const stateData = useSelector(state => state.excercise.excerciseData)
-  const stateoneData = useSelector(state => state.excercise.getOneData)
-
   const [show, setShow] = useState(false);
+  const [activityData, setactivityData] = useState([]);
 
-  const handleShow = (id) => {
+  const handleShow = async (id) => {
     dispatch(getOneExcercise(id))
-    getActivityData(id)
+    const data = await getActivityData(id);
+    setactivityData(data.data.message);
+    // setactivityData(activityData);
     setShow(true)
+    return activityData
   }
 
   async function getActivityData(id) {
-    let activityData;
-    axios
-      .get(`http://localhost:3007/getOneActivity/${id}`)
-      .then(name =>{
-        activityData = name.data.message
-        console.log('Activity Data  1', activityData)
-        console.log('Activity Data  2', name.data.message)
-      })
+    const response = await axios.get(`http://localhost:3007/getOneActivity/${id}`)
       .catch(error => console.log(error));
+    console.log("issue here -- then", response.data.message)
+    return response;
   };
 
   const handleClose = () => setShow(false);
@@ -68,16 +66,17 @@ const ActivityList = () => {
 
   return (
     <>
+   
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title style={{ color: '#c8102e' }}>Update Activity</Modal.Title>
         </Modal.Header>
         <Modal.Body><form>
           <label>Name
-            <input type="text" value={addExcercise.name} name="name" onChange={Setting} />
+            <input type="text" value={activityData.name} name="name" onChange={Setting} />
           </label>
           <label>Description
-            <textarea type="text" value={addExcercise.description} name="description" onChange={Setting} />
+            <textarea type="text" value={activityData.description} name="description" onChange={Setting} />
           </label>
           <label>Activity type
           <InputGroup className="mb-3">
@@ -90,10 +89,10 @@ const ActivityList = () => {
             </InputGroup>
           </label>
           <label>Duration
-            <input type="email" value={addExcercise.duration} name="duration" onChange={Setting} />
+            <input type="email" value={activityData.duration} name="duration" onChange={Setting} />
           </label>
           <label>Date
-            <input type="email" value={addExcercise.date} name="date" onChange={Setting} />
+            <input type="email" value={activityData.date} name="date" onChange={Setting} />
           </label>
         </form></Modal.Body>
         <Modal.Footer>
